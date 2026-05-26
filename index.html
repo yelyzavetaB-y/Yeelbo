@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yeelbo — геймфікація лояльності для вашого бізнесу</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.png" type="image/png">
+<style>
+  /* Your CSS styles here */
+  
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a14;
+    --bg2: #12121f;
+    --bg3: #1a1a2e;
+    --accent: #7c3aed;
+    --accent2: #a855f7;
+    --gold: #f5c542;
+    --text: #e8e4ff;
+    --muted: #6b6890;
+    --border: rgba(124,58,237,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-bottom: 0.5px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,20,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--accent2); }
+
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  nav a:hover { color: var(--text); }
+
+  .nav-links { display: flex; gap: 2rem; align-items: center; }
+
+  .btn-nav {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-nav:hover { background: var(--accent2); color: #fff; transform: scale(1.03); }
+
+  /* HERO */
+  .hero {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 2rem 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(124,58,237,0.15);
+    border: 0.5px solid var(--border);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+    color: #fff;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--accent2);
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 440px;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { background: var(--accent2); transform: scale(1.03); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 0.5px solid var(--border);
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-ghost:hover { border-color: var(--accent2); background: rgba(124,58,237,0.08); }
+
+  /* WHEEL DEMO */
+  .wheel-demo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .wheel-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 24px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .wheel-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .wheel-pointer {
+    width: 0; height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid var(--gold);
+  }
+
+  #demoWheel { display: block; border-radius: 50%; }
+
+  .spin-btn-demo {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 40px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .spin-btn-demo:hover { background: var(--accent2); transform: scale(1.04); }
+  .spin-btn-demo:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  .prize-result {
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 500;
+    min-height: 20px;
+    text-align: center;
+  }
+
+  /* HOW IT WORKS */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.2rem;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .step-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+  }
+
+  .step-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* NICHES */
+  .niches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .niche-tag {
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    padding: 8px 18px;
+    border-radius: 50px;
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .price-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+
+  .price-card.featured {
+    border: 1.5px solid var(--accent);
+    position: relative;
+  }
+
+  .featured-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .price-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-period { font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; }
+
+  .price-features { list-style: none; margin-bottom: 1.75rem; }
+
+  .price-features li {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .price-features li::before {
+    content: '✓';
+    color: var(--accent2);
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--bg2);
+    border-top: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
+    padding: 5rem 2rem;
+    text-align: center;
+  }
+
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+
+  .cta-section h2 { margin-bottom: 1rem; }
+
+  .cta-section p { color: var(--muted); margin-bottom: 2rem; }
+
+  .form-row {
+    display: flex;
+    gap: 0.75rem;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .form-row input {
+    flex: 1;
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    color: var(--text);
+    padding: 12px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .form-row input::placeholder { color: var(--muted); }
+  .form-row input:focus { border-color: var(--accent2); }
+
+  .form-row button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .form-row button:hover { background: var(--accent2); }
+
+  .thanks-msg {
+    display: none;
+    color: var(--gold);
+    font-size: 15px;
+    margin-top: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 0.5px solid var(--border);
+  }
+
+  footer strong { color: var(--text); font-family: 'Syne', sans-serif; }
+
+  /* MECHANICS */
+  .mechanics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .mechanic-card {
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+
+  .mechanic-card:hover { border-color: var(--accent); }
+
+  .mechanic-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .mechanic-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+
+  .mechanic-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .mechanic-list {
+    list-style: none;
+  }
+
+  .mechanic-list li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 5px 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    border-top: 0.5px solid rgba(124,58,237,0.12);
+  }
+
+  .mechanic-list li::before {
+    content: '→';
+    color: var(--accent2);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* DASHBOARD PREVIEW */
+  .dashboard-preview {
+    display: flex;
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    min-height: 360px;
+  }
+
+  .dash-sidebar {
+    width: 160px;
+    flex-shrink: 0;
+    background: var(--bg3);
+    border-right: 0.5px solid var(--border);
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dash-menu-item {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 9px 1.25rem;
+    cursor: default;
+    border-radius: 0 6px 6px 0;
+    margin-right: 8px;
+    transition: background 0.15s;
+  }
+
+  .dash-menu-item.active {
+    background: rgba(124,58,237,0.2);
+    color: var(--text);
+  }
+
+  .dash-main {
+    flex: 1;
+    padding: 1.5rem;
+    overflow: hidden;
+  }
+
+  .dash-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dash-stat {
+    background: var(--bg3);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+  }
+
+  .dash-stat-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .dash-stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .dash-stat-trend {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .dash-stat-trend.up { color: #4ade80; }
+  .dash-stat-trend.neutral { color: var(--muted); }
+
+  .dash-section-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .dash-chart {
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 80px;
+  }
+
+  .chart-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .chart-bar {
+    width: 100%;
+    background: rgba(124,58,237,0.35);
+    border-radius: 3px 3px 0 0;
+    transition: background 0.2s;
+  }
+
+  .chart-bar.accent { background: var(--accent); }
+
+  .chart-bar-wrap span {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  .dash-prizes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dash-prize-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .prize-name {
+    font-size: 12px;
+    color: var(--text);
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .prize-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: var(--bg3);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prize-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+  }
+
+  .prize-count {
+    font-size: 11px;
+    color: var(--muted);
+    width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .dash-features-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .dash-feat {
+    display: flex;
+    gap: 1rem;
+    background: var(--bg2);
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .dash-feat-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .dash-feat strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .dash-feat p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* FAQ */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 760px;
+    border: 0.5px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .faq-item {
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+  }
+
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q {
+    font-size: 15px;
+    color: var(--text);
+    padding: 1.1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+    background: var(--bg2);
+    transition: background 0.15s;
+  }
+
+  .faq-item:hover .faq-q { background: var(--bg3); }
+  .faq-item.open .faq-q { background: var(--bg3); color: var(--accent2); }
+
+  .faq-arrow {
+    color: var(--muted);
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .faq-item.open .faq-arrow { transform: rotate(180deg); color: var(--accent2); }
+
+  .faq-a {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    padding: 0 1.5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    background: var(--bg3);
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding: 1rem 1.5rem 1.25rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .mechanics-grid { grid-template-columns: 1fr; }
+    .dash-sidebar { display: none; }
+    .dash-stats-row { grid-template-columns: 1fr; }
+    .dash-features-row { grid-template-columns: 1fr; }
+
+    .hero { grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.25rem 2rem; }
+    h1 { font-size: 2.2rem; }
+    .steps { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .section { padding: 3rem 1.25rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Yeel<span>bo</span></div>
+  <div class="nav-links">
+    <a href="#how">Як це працює</a>
+    <a href="#niches">Для кого</a>
+    <a href="#pricing">Тарифи</a>
+    <a href="#cta" class="btn-nav">Спробувати безплатно</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div>
+    <div class="hero-badge">Геймфікація лояльності</div>
+    <h1>Зроби так, щоб клієнти <em>поверталися знову</em></h1>
+    <p class="hero-sub">Yeelbo — колесо фортуни, скретч-карти та серії для вашого бізнесу. Як у Brawl Stars, тільки ваші призи.</p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Спробувати безплатно</a>
+      <a href="#how" class="btn-ghost">Як це працює</a>
+    </div>
+  </div>
+
+  <div class="wheel-demo">
+    <div class="wheel-card">
+      <div class="wheel-title">Live демо</div>
+      <div class="wheel-pointer"></div>
+      <canvas id="demoWheel" width="220" height="220"></canvas>
+      <button class="spin-btn-demo" id="spinBtn" onclick="spinWheel()">Крутити!</button>
+      <div class="prize-result" id="prizeResult"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="how">
+  <div class="section-label">Як це працює</div>
+  <h2>Три кроки і готово</h2>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>Реєструєтесь</h3>
+      <p>Заходите в панель, вводите назву бізнесу та прописуєте свої призи — знижки, напої, години.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>Отримуєте QR-код</h3>
+      <p>Роздруковуєте і ставите на касу або столик. Клієнт сканує і крутить колесо.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>Клієнти повертаються</h3>
+      <p>Щоденні серії, нові призи щотижня — люди приходять знову, щоб крутити.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="niches" style="padding-top: 0;">
+  <div class="section-label">Для кого</div>
+  <h2>Підходить будь-якому<br>бізнесу з постійними клієнтами</h2>
+  <div class="niches">
+    <span class="niche-tag">Барбершопи</span>
+    <span class="niche-tag">Кав'ярні</span>
+    <span class="niche-tag">Геймерські клуби</span>
+    <span class="niche-tag">Фітнес зали</span>
+    <span class="niche-tag">Nail студії</span>
+    <span class="niche-tag">Піцерії</span>
+    <span class="niche-tag">Суші бари</span>
+    <span class="niche-tag">Масажні кабінети</span>
+    <span class="niche-tag">Автомийки</span>
+    <span class="niche-tag">Квест кімнати</span>
+  </div>
+</div>
+
+<!-- MECHANICS SECTION -->
+<div class="section" id="mechanics" style="padding-top: 0;">
+  <div class="section-label">Механіки</div>
+  <h2>Три інструменти утримання<br>клієнтів в одному місці</h2>
+  <div class="mechanics-grid">
+
+    <div class="mechanic-card">
+      <div class="mechanic-icon">🎡</div>
+      <h3>Колесо фортуни</h3>
+      <p class="mechanic-desc">Клієнт сканує QR — крутить колесо — отримує приз. Ви самі налаштовуєте сектори: знижки, безкоштовні товари, бонусні бали.</p>
+      <ul class="mechanic-list">
+        <li>До 12 секторів з власними призами</li>
+        <li>Контроль частоти: 1 раз на день / тиждень</li>
+        <li>Налаштування ймовірності кожного призу</li>
+        <li>Автоматичне повідомлення у Telegram</li>
+      </ul>
+    </div>
+
+    <div class="mechanic-card">
+      <div class="mechanic-icon">🃏</div>
+      <h3>Скретч-карти</h3>
+      <p class="mechanic-desc">Цифровий аналог скретч-картки — клієнт "стирає" покриття на телефоні і дізнається свій приз. Висока залученість.</p>
+      <ul class="mechanic-list">
+        <li>3 варіанти дизайну карток</li>
+        <li>Власне фото або лого на картці</li>
+        <li>Видача: після покупки або за сумою чеку</li>
+        <li>Ліміт видачі на клієнта (захист від зловживань)</li>
+      </ul>
+    </div>
+
+    <div class="mechanic-card">
+      <div class="mechanic-icon">📇</div>
+      <h3>Stamp-карта + Стріки</h3>
+      <p class="mechanic-desc">Класична карточка "6 покупок — 7-а безкоштовно" + ігровий елемент: серії відвідувань зі зростаючими бонусами.</p>
+      <ul class="mechanic-list">
+        <li>Кількість штампів — від 3 до 20</li>
+        <li>Стрік: бонус за 3, 7, 14, 30 днів поспіль</li>
+        <li>Push-нагадування через Telegram-бот</li>
+        <li>Клієнт бачить прогрес у реальному часі</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- DASHBOARD PREVIEW -->
+<div class="section" id="dashboard" style="padding-top: 0;">
+  <div class="section-label">Панель управління</div>
+  <h2>Все під контролем —<br>з телефону або ноутбука</h2>
+  <div class="dashboard-preview">
+    <div class="dash-sidebar">
+      <div class="dash-menu-item active">📊 Огляд</div>
+      <div class="dash-menu-item">🎡 Колесо</div>
+      <div class="dash-menu-item">🃏 Скретч</div>
+      <div class="dash-menu-item">📇 Stamp-карта</div>
+      <div class="dash-menu-item">👥 Клієнти</div>
+      <div class="dash-menu-item">⚙️ Налаштування</div>
+    </div>
+    <div class="dash-main">
+      <div class="dash-stats-row">
+        <div class="dash-stat">
+          <div class="dash-stat-val">1 247</div>
+          <div class="dash-stat-label">Клієнтів цього місяця</div>
+          <div class="dash-stat-trend up">↑ 18% vs минулий місяць</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-val">342</div>
+          <div class="dash-stat-label">Повторних візитів</div>
+          <div class="dash-stat-trend up">↑ 34%</div>
+        </div>
+        <div class="dash-stat">
+          <div class="dash-stat-val">87%</div>
+          <div class="dash-stat-label">Використали приз</div>
+          <div class="dash-stat-trend neutral">= стабільно</div>
+        </div>
+      </div>
+      <div class="dash-section-title">Активність за тиждень</div>
+      <div class="dash-chart">
+        <div class="chart-bars">
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:55%"></div><span>Пн</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:70%"></div><span>Вт</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:45%"></div><span>Ср</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:90%"></div><span>Чт</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:80%"></div><span>Пт</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar accent" style="height:100%"></div><span>Сб</span></div>
+          <div class="chart-bar-wrap"><div class="chart-bar" style="height:60%"></div><span>Нд</span></div>
+        </div>
+      </div>
+      <div class="dash-section-title">Топ призів цього тижня</div>
+      <div class="dash-prizes">
+        <div class="dash-prize-row"><span class="prize-name">☕ Кава в подарунок</span><div class="prize-bar-wrap"><div class="prize-bar" style="width:78%"></div></div><span class="prize-count">156×</span></div>
+        <div class="dash-prize-row"><span class="prize-name">💈 Знижка 10%</span><div class="prize-bar-wrap"><div class="prize-bar" style="width:54%"></div></div><span class="prize-count">108×</span></div>
+        <div class="dash-prize-row"><span class="prize-name">🎁 Безкоштовно</span><div class="prize-bar-wrap"><div class="prize-bar" style="width:23%"></div></div><span class="prize-count">46×</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="dash-features-row">
+    <div class="dash-feat">
+      <div class="dash-feat-icon">📱</div>
+      <div>
+        <strong>QR-код готовий одразу</strong>
+        <p>Одразу після реєстрації — скачуєте PDF з QR і ставите на касу. Жодних технічних налаштувань.</p>
+      </div>
+    </div>
+    <div class="dash-feat">
+      <div class="dash-feat-icon">🔔</div>
+      <div>
+        <strong>Telegram-сповіщення</strong>
+        <p>Ви отримуєте сповіщення коли клієнт виграв приз і коли прийшов використати його.</p>
+      </div>
+    </div>
+    <div class="dash-feat">
+      <div class="dash-feat-icon">🛡️</div>
+      <div>
+        <strong>Захист від накруток</strong>
+        <p>Кожен клієнт ідентифікується — крутити колесо двічі на день не вийде.</p>
+      </div>
+    </div>
+    <div class="dash-feat">
+      <div class="dash-feat-icon">🎨</div>
+      <div>
+        <strong>Брендинг під вас</strong>
+        <p>Логотип, кольори, назва — клієнт бачить ваш бренд, а не Yeelbo.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section" id="faq" style="padding-top: 0;">
+  <div class="section-label">Питання та відповіді</div>
+  <h2>Часті запитання</h2>
+  <div class="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Як клієнт отримує доступ до колеса? Треба скачувати додаток?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Ні. Клієнт просто сканує QR-код камерою телефону — відкривається браузер і одразу колесо. Жодних додатків, жодних реєстрацій з боку клієнта.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Як я перевіряю, що клієнт справді виграв той приз?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Після виграшу клієнту показується унікальний код призу. Ви в панелі управління вводите цей код і бачите: що виграно, коли, на якій точці. Також отримуєте Telegram-сповіщення в реальному часі.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Чи можна обмежити кількість крутінь на день?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Так, ви самі налаштовуєте: 1 раз на день, 1 раз на тиждень, або тільки після покупки на певну суму. Система ідентифікує клієнтів автоматично.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Скільки часу займає налаштування?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Базове налаштування — 15-20 хвилин. Ви вводите назву бізнесу, прописуєте призи, скачуєте QR. На першому місяці я особисто допомагаю з налаштуванням безкоштовно.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Що буде після безкоштовного місяця?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Нічого автоматично не списується. Після місяця я напишу і запитаю чи хочете продовжити. Карточку вводити наперед не потрібно.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Чи можу я мати кілька точок під одним акаунтом?<span class="faq-arrow">▾</span></div>
+      <div class="faq-a">Так, тариф «Бізнес» включає до 5 точок. Кожна точка має власний QR-код і окрему аналітику. В дашборді можна переключатися між ними.</div>
+    </div>
+  </div>
+</div>
+<div class="section" id="pricing">
+  <div class="section-label">Тарифи</div>
+  <h2>Просто і прозоро</h2>
+  <div class="pricing-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto;">
+    <div class="price-card">
+      <div class="price-name">Старт</div>
+      <div class="price-amount">900грн</div>
+      <div class="price-period">на місяць · 1 точка</div>
+      <ul class="price-features">
+        <li>Колесо фортуни</li>
+        <li>Stamp-карта</li>
+        <li>QR-код</li>
+        <li>До 500 клієнтів</li>
+        <li>Базова аналітика</li>
+      </ul>
+      <a href="#cta" class="btn-ghost" style="display:block;text-align:center;text-decoration:none;">Спробувати безплатно</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-badge">Популярний</div>
+      <div class="price-name">Бізнес</div>
+      <div class="price-amount">1799грн</div>
+      <div class="price-period">на місяць · до 5 точок</div>
+      <ul class="price-features">
+        <li>Колесо + скретч-карти</li>
+        <li>Stamp-карта + стріки</li>
+        <li>Власний брендинг</li>
+        <li>Необмежені клієнти</li>
+        <li>Telegram сповіщення</li>
+        <li>Детальна аналітика</li>
+      </ul>
+      <a href="#cta" class="btn-primary" style="display:block;text-align:center;text-decoration:none;">Спробувати безплатно</a>
+    </div>
+  </div>
+ <p style="text-align:center; margin-top: 1.5rem;">
+  <span style="background: rgba(245,197,66,0.12); border: 0.5px solid rgba(245,197,66,0.35); color: #f5c542; font-size: 13px; font-weight: 500; padding: 8px 20px; border-radius: 50px; display: inline-block; letter-spacing: 0.5px;">
+     Перший місяць безплатно — без карточки
+  </span>
+</p>
+</div>
+
+<div class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="section-label">Безплатний місяць</div>
+    <h2>Хочеш спробувати<br>для свого бізнесу?</h2>
+    <p>Залиш Telegram або email — напишу і налаштуємо безплатно на місяць.</p>
+      <a href="https://tally.so/r/2EDa6j" 
+    target="_blank" 
+    class="btn-primary" 
+    style="display:inline-block; text-decoration:none; padding: 14px 40px;">
+    Хочу спробувати безплатно →
+  </a>
+  <p style="font-size: 13px; color: var(--muted); margin-top: 12px;">
+    Відповім протягом 24 годин
+  </p>
+  </div>
+</div>
+
+<footer>
+  <strong>Yeelbo</strong> — геймфікація лояльності для малого та середнього бізнесу
+</footer>
+
+<script>
+const prizes = [
+  { label: "Знижка 10%", color: "#1a2d50" },
+  { label: "Безкоштовно", color: "#4a2060" },
+  { label: "Знижка 15%", color: "#1a1535" },
+  { label: "+1 година", color: "#3b1a00" },
+  { label: "Подарунок", color: "#1a3020" },
+  { label: "Спробуй ще", color: "#1a1a2a" },
+  { label: "Знижка 5%", color: "#2a1040" },
+  { label: "Кава в подарунок", color: "#1a2a40" },
+];
+
+const canvas = document.getElementById('demoWheel');
+const ctx = canvas.getContext('2d');
+const n = prizes.length;
+const arc = (2 * Math.PI) / n;
+let rot = 0, spinning = false;
+
+function drawWheel(r) {
+  ctx.clearRect(0, 0, 220, 220);
+  const cx = 110, cy = 110, radius = 104;
+  for (let i = 0; i < n; i++) {
+    const s = r + i * arc - Math.PI / 2;
+    const e = s + arc;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, radius, s, e);
+    ctx.closePath();
+    ctx.fillStyle = prizes[i].color;
+    ctx.fill();
+    ctx.strokeStyle = '#0a0a14';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(r + i * arc + arc / 2 - Math.PI / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#c0b8f0';
+    ctx.font = '500 11px Inter, sans-serif';
+    ctx.fillText(prizes[i].label, radius - 8, 4);
+    ctx.restore();
+  }
+  ctx.beginPath();
+  ctx.arc(cx, cy, 14, 0, 2 * Math.PI);
+  ctx.fillStyle = '#0a0a14';
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(cx, cy, 8, 0, 2 * Math.PI);
+  ctx.fillStyle = '#7c3aed';
+  ctx.fill();
+}
+
+function spinWheel() {
+  if (spinning) return;
+  spinning = true;
+  document.getElementById('spinBtn').disabled = true;
+  document.getElementById('prizeResult').textContent = '';
+  const extra = 5 + Math.random() * 3;
+  const idx = Math.floor(Math.random() * n);
+  const target = rot + 2 * Math.PI * extra + idx * arc;
+  const start = rot, dur = 4000, t0 = performance.now();
+  function animate(now) {
+    const t = Math.min((now - t0) / dur, 1);
+    const ease = 1 - Math.pow(1 - t, 4);
+    rot = start + (target - start) * ease;
+    drawWheel(rot);
+    if (t < 1) { requestAnimationFrame(animate); }
+    else {
+      spinning = false;
+      document.getElementById('spinBtn').disabled = false;
+      document.getElementById('prizeResult').textContent = prizes[idx].label + ' — ваш приз!';
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+
+function submitForm() {
+  const val = document.getElementById('contactInput').value.trim();
+  if (!val) return;
+  document.getElementById('contactInput').value = '';
+  document.getElementById('thanksMsg').style.display = 'block';
+}
+
+drawWheel(0);
+</script>
+</body>
+</html>
